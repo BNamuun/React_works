@@ -1,41 +1,25 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { TodosList } from "./TodosList";
+import { TodoNew } from "./TodosNew";
 // const initialTodos = [" washing", " cleaning", " vacuuming"];
 // const a = ["kjahdkf"]; // huuchin butets ni jiriin massiv dotor string bsan
 // const a1 = [{ text: "d;lkfak", id: 123, done: true }]; // shine butets ni
 function Todos() {
-  const [text, setText] = useState("");
   const [initialTodos, setTodos] = useState([]);
-  const [error, setError] = useState("");
-  const [editing, setEditing] = useState(); // saving a index
+  // const [editing, setEditing] = useState(); // saving a index
   const [editingText, setEditingTexts] = useState({});
 
-  function handleTextChange(e) {
-    setText(e.target.value);
+  function handleSave(text) {
+    const newTodo = {
+      text: text,
+      done: false,
+      id: uuidv4(),
+    };
+    const newTodos = [newTodo, ...initialTodos];
+    setTodos(newTodos);
   }
-  function addTodo() {
-    if (text === "") {
-      setError("utgaa bichne uu");
-    } else {
-      if (editing === undefined) {
-        const newTodo = {
-          text: text,
-          done: false,
-          id: uuidv4(),
-        };
 
-        const newTodos = [newTodo, ...initialTodos];
-        setTodos(newTodos);
-      } else {
-        const newTodos = [...initialTodos];
-        newTodos[editing].text = text;
-        setTodos(newTodos);
-        setEditing(undefined);
-      }
-      setText("");
-      setError("");
-    }
-  }
   function handleDelete(bairlal) {
     if (window.confirm("устгах уу?")) {
       const newTodos = [...initialTodos];
@@ -59,17 +43,17 @@ function Todos() {
   }
 
   // edit todo with input
-  function editTodoWithCreateInput(index) {
-    setEditing(index);
-    setText(initialTodos[index].text);
-  }
-  function editTodoWithPrompt(id) {
-    const newTodos = [...initialTodos];
-    const index = newTodos.findIndex((todo) => todo.id === id);
-    const editedText = prompt("Todo zahas", initialTodos[index].text);
-    newTodos[index].text = editedText;
-    setTodos(newTodos);
-  }
+  // function editTodoWithCreateInput(index) {
+  //   setEditing(index);
+  //   setText(initialTodos[index].text);
+  // }
+  // function editTodoWithPrompt(id) {
+  //   const newTodos = [...initialTodos];
+  //   const index = newTodos.findIndex((todo) => todo.id === id);
+  //   const editedText = prompt("Todo zahas", initialTodos[index].text);
+  //   newTodos[index].text = editedText;
+  //   setTodos(newTodos);
+  // }
   function editTodoInline(id, index) {
     const newEditingTexts = { ...editingText };
     newEditingTexts[id] = initialTodos[index].text;
@@ -99,58 +83,17 @@ function Todos() {
 
   return (
     <div>
-      <input
-        value={text}
-        style={{ borderColor: error ? "red" : "black" }}
-        onChange={handleTextChange}
-      ></input>
-      <button onClick={addTodo}> Нэмэх</button>
-      <ul>
-        {initialTodos.map((item, index) => {
-          return (
-            <li
-              key={item.id}
-              style={{ textDecoration: item.done ? "line-through" : "none" }}
-            >
-              {editingText[item.id] !== undefined ? (
-                <>
-                  <input
-                    value={editingText[item.id]}
-                    onChange={(e) => handleEditingText(item.id, e)}
-                  ></input>
-                  <button onClick={() => cancelEditing(item.id)}> Болих</button>
-                  <button onClick={() => updateEditingText(index, item.id)}>
-                    Хадгалах
-                  </button>
-                </>
-              ) : (
-                <>
-                  <input
-                    type="checkbox"
-                    onChange={(e) => handleDoneChange(item.id, e)}
-                  />
-                  {item.text}
-
-                  {!item.done && (
-                    //zasah with prompt
-                    // <button onClick={() => editTodoWithPrompt(item.id)}>Засах</button>
-
-                    // <button onClick={() => editTodoWithCreateInput(index)}>
-                    //   {" "}
-                    //   Засах
-                    // </button>
-                    <button onClick={() => editTodoInline(item.id, index)}>
-                      {" "}
-                      Засах
-                    </button>
-                  )}
-                  <button onClick={() => handleDelete(index)}> Устгах</button>
-                </>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+      <TodoNew onSave={handleSave}></TodoNew>
+      <TodosList
+        initialTodos={initialTodos}
+        editingText={editingText}
+        cancelEditing={cancelEditing}
+        handleEditingText={handleEditingText}
+        updateEditingText={updateEditingText}
+        handleDoneChange={handleDoneChange}
+        editTodoInline={editTodoInline}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 }

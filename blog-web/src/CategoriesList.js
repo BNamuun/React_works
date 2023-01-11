@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import categories from "./categories";
-
+import { v4 as uuidv4 } from "uuid";
 export function CategoriesList() {
   return (
     <>
@@ -17,7 +17,7 @@ function ListItem({ category }) {
     <Card
       key={category.id}
       className="d-flex justify-content-between align-items-center flex-row"
-      style={{ width: "500px" }}
+      style={{ width: "600px" }}
     >
       <Card.Body>
         {category.name} #{category.id}{" "}

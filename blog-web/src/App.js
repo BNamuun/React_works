@@ -1,26 +1,22 @@
 // import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button } from "react-bootstrap";
 import CollapsibleExample from "./navbar";
-import BodyComp from "./card";
-import HeadPart from "./headPart";
-import CategoriesEdit from "./categEdit";
+import { CategoriesList } from "./CategoriesList";
+import { Categor } from "./Categ";
 
 function App() {
   return (
-    // <div className="Container1">
-    //   <CollapsibleExample />
-    //   <body className="d-flex flex-column gap-4 justify-content-center align-items-center">
-    //     <HeadPart />
-    //     <div className="d-flex flex-column gap-4 justify-content-center align-items-center">
-    //       <BodyComp />
-    //       <BodyComp />
-    //       <BodyComp />
-    //     </div>
-    //   </body>
-    // </div>
-    <CategoriesEdit />
+    <>
+      <CollapsibleExample />
+      <div
+        className="container d-flex flex-column justify-content-center align-item-center gap-4"
+        style={{ width: "600px", height: "50vh" }}
+      >
+        <Categor />
+        <CategoriesList />
+      </div>
+    </>
   );
   // return <Demo />;
 }
