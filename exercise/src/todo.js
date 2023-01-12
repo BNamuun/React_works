@@ -1,22 +1,47 @@
 import { useState } from "react";
-const list = ["nom", "shh", "kjd"];
+import { v4 as uuidv4 } from "uuid";
+
 export function ToDo() {
   const [text, setText] = useState("");
+  const [list, setList] = useState([]);
 
-  function onSave(e) {
-    const InpVal = e.target.value;
-    console.log(InpVal);
+  function viewText(e) {
+    setText(e.target.value);
   }
-  function viewText() {
-    setText(text);
+  function onSave() {
+    if (text === "") {
+      setText("utgaa oruulna uu!");
+    } else {
+      const addedList = {
+        text: text,
+        done: false,
+        id: uuidv4(),
+      };
+      const List1 = [addedList, ...list];
+      setList(List1);
+      setText("");
+      // console.log(List1);
+    }
+  }
+  function checkBox(id, e) {
+    const List = [...list];
+    console.log(e);
   }
   return (
     <>
-      <input onChange={onSave} value={text}></input>
-      <button onClick={viewText}> Нэмэх</button>
+      <input onChange={viewText} value={text}></input>
+      <button onClick={onSave}> Нэмэх</button>
       <ul>
-        {list.map((item) => {
-          return <li>{item}</li>;
+        {list.map((item, index) => {
+          return (
+            <li key={index}>
+              <input
+                type={"checkbox"}
+                onChange={(e) => checkBox(item.id, e)}
+              ></input>
+              {item.text}
+            </li>
+          );
         })}
       </ul>
     </>
