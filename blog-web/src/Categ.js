@@ -1,32 +1,32 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Card from "react-bootstrap/Card";
 import { v4 as uuidv4 } from "uuid";
+import { CategoriesList } from "./CategoriesList";
 
 export function Categor() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [text, SetText] = useState("");
-  const [list, addList] = useState({});
+  // const [list, addList] = useState({});
   const [initialList, setList] = useState([]);
 
   // const InpVal = "";
 
   function getValue(e) {
     const InpVal = e.target.value;
-    // console.log(InpVal);
     SetText(InpVal);
   }
   function Saving() {
+    // alert(text);
     const listCard = {
       text: text,
       id: uuidv4(),
     };
     const listCards = [listCard, ...initialList];
     setList(listCards);
-    // console.log(listCards);
+    console.log(listCards);
   }
   return (
     <>
@@ -39,10 +39,7 @@ export function Categor() {
           Шинэ
         </button>
       </div>
-
-      <Card>
-        <Card.Body> {text} </Card.Body>
-      </Card>
+      <CategoriesList Huslee={initialList} />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

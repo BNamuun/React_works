@@ -1,11 +1,10 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import categories from "./categories";
-import { v4 as uuidv4 } from "uuid";
-export function CategoriesList() {
+
+export function CategoriesList({ Huslee, index }) {
   return (
     <>
-      {categories.map((angilal) => (
+      {Huslee.map((angilal, index) => (
         <ListItem category={angilal} />
       ))}
     </>
@@ -19,9 +18,7 @@ function ListItem({ category }) {
       className="d-flex justify-content-between align-items-center flex-row"
       style={{ width: "600px" }}
     >
-      <Card.Body>
-        {category.name} #{category.id}{" "}
-      </Card.Body>
+      <Card.Body>{category.text} </Card.Body>
       <Button className="m-3" variant="dark">
         Засах
       </Button>

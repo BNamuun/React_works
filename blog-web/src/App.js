@@ -2,7 +2,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CollapsibleExample from "./navbar";
-import { CategoriesList } from "./CategoriesList";
+
 import { Categor } from "./Categ";
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
         style={{ width: "600px", height: "50vh" }}
       >
         <Categor />
-        <CategoriesList />
       </div>
     </>
   );
