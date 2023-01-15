@@ -28,6 +28,7 @@ export function Categor() {
     setList(listCards);
     console.log(listCards);
   }
+  function Editbtn() {}
   return (
     <>
       <div
@@ -39,7 +40,7 @@ export function Categor() {
           Шинэ
         </button>
       </div>
-      <CategoriesList Huslee={initialList} />
+      <CategoriesList Huslee={initialList} Edit={() => Editbtn()} />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

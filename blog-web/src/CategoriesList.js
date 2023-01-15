@@ -1,17 +1,17 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-export function CategoriesList({ Huslee, index }) {
+export function CategoriesList({ Huslee, Editbtn }) {
   return (
     <>
       {Huslee.map((angilal, index) => (
-        <ListItem category={angilal} />
+        <ListItem category={angilal} Editbtn={Editbtn} />
       ))}
     </>
   );
 }
 
-function ListItem({ category }) {
+function ListItem({ category, Editbtn }) {
   return (
     <Card
       key={category.id}
@@ -19,9 +19,14 @@ function ListItem({ category }) {
       style={{ width: "600px" }}
     >
       <Card.Body>{category.text} </Card.Body>
-      <Button className="m-3" variant="dark">
-        Засах
-      </Button>
+      <div>
+        <Button onClick={Editbtn} className="m-3" variant="dark">
+          Засах
+        </Button>
+        <Button className="m-3" variant="warning">
+          Устгах
+        </Button>
+      </div>
     </Card>
   );
 }
