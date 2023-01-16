@@ -1,17 +1,43 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { useState } from "react";
 
-export function CategoriesList({ Huslee, Editbtn }) {
+export function CategoriesList({ Huslee, setlist }) {
+  const [editingText, savingIndex] = useState();
+
+  function editInput(index) {
+    const listCards = [...Huslee];
+    console.log(listCards[index].text);
+    savingIndex(index);
+  }
+  function DeleteBtn(index) {
+    if (window.confirm("Delete this item!")) {
+      const ListCards = [...Huslee];
+      ListCards.splice(index, 1);
+      setlist(ListCards);
+    }
+  }
   return (
     <>
-      {Huslee.map((angilal, index) => (
-        <ListItem category={angilal} Editbtn={Editbtn} />
-      ))}
+      {/* <ul> */}
+      {Huslee.map((angilal, index) => {
+        return (
+          // <li style={{ textDecoration: "none" }}>
+          <ListItem
+            key={angilal.id}
+            category={angilal}
+            Editbtn={() => editInput(index)}
+            DeleteBtn={() => DeleteBtn(index)}
+          />
+          // </li>
+        );
+      })}
+      {/* </ul> */}
     </>
   );
 }
 
-function ListItem({ category, Editbtn }) {
+function ListItem({ category, Editbtn, DeleteBtn }) {
   return (
     <Card
       key={category.id}
@@ -23,7 +49,7 @@ function ListItem({ category, Editbtn }) {
         <Button onClick={Editbtn} className="m-3" variant="dark">
           Засах
         </Button>
-        <Button className="m-3" variant="warning">
+        <Button className="m-3" variant="warning" onClick={DeleteBtn}>
           Устгах
         </Button>
       </div>

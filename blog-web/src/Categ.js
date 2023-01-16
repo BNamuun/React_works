@@ -19,16 +19,20 @@ export function Categor() {
     SetText(InpVal);
   }
   function Saving() {
-    // alert(text);
-    const listCard = {
-      text: text,
-      id: uuidv4(),
-    };
-    const listCards = [listCard, ...initialList];
-    setList(listCards);
-    console.log(listCards);
+    if (text === "") {
+      SetText("utgaa oruulna uu");
+    } else {
+      // alert(text);
+      const listCard = {
+        text: text,
+        id: uuidv4(),
+      };
+      const listCards = [listCard, ...initialList];
+      setList(listCards);
+      console.log(listCards);
+      SetText("");
+    }
   }
-  function Editbtn() {}
   return (
     <>
       <div
@@ -40,7 +44,7 @@ export function Categor() {
           Шинэ
         </button>
       </div>
-      <CategoriesList Huslee={initialList} Edit={() => Editbtn()} />
+      <CategoriesList Huslee={initialList} setlist={setList} />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -49,7 +53,7 @@ export function Categor() {
 
         <Modal.Body>
           <p>Нэр</p>
-          <input onChange={getValue} style={{ width: "100%" }} />
+          <input onChange={getValue} value={text} style={{ width: "100%" }} />
         </Modal.Body>
 
         <Modal.Footer>

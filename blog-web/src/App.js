@@ -2,10 +2,28 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CollapsibleExample from "./navbar";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { Categor } from "./Categ";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Blog />,
+  },
+  {
+    path: "/hi",
+    element: <div>Hi world!</div>,
+  },
+  {
+    path: "blog",
+    element: <div>Hello world!</div>,
+  },
+]);
 function App() {
+  return <RouterProvider router={router} />;
+}
+function Blog() {
   return (
     <>
       <CollapsibleExample />
