@@ -32,6 +32,8 @@ function Blog() {
         style={{ width: "600px", height: "50vh" }}
       >
         <Categor />
+        <br />
+        {/* <a href="/about"> About Namuun</a> */}
       </div>
     </>
   );

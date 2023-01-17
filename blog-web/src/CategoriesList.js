@@ -2,57 +2,121 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState } from "react";
 
-export function CategoriesList({ Huslee, setlist }) {
-  const [editingText, savingIndex] = useState();
+export function CategoriesList({ Jagsaalt, setlist }) {
+  const [editingText, savingIndex] = useState({});
 
-  function editInput(index) {
-    const listCards = [...Huslee];
-    console.log(listCards[index].text);
-    savingIndex(index);
+  function editInput(id, index) {
+    const listCards = [...Jagsaalt];
+    listCards[id] = Jagsaalt[index].text;
+    savingIndex(listCards);
+  }
+  function handleEditingText(id, e) {
+    const listCard = { ...editingText };
+    listCard[id] = e.target.value;
+    savingIndex(listCard);
   }
   function DeleteBtn(index) {
     if (window.confirm("Delete this item!")) {
-      const ListCards = [...Huslee];
+      const ListCards = [...Jagsaalt];
       ListCards.splice(index, 1);
       setlist(ListCards);
     }
   }
+  function Cancelbtn(id) {
+    const listCard = { ...editingText };
+    listCard[id] = undefined;
+    savingIndex(listCard);
+  }
+  function SaveEditedText(index, id) {
+    const ListCards = [...Jagsaalt];
+    ListCards[index].text = editingText[id];
+    setlist(ListCards);
+    Cancelbtn(id);
+  }
   return (
     <>
-      {/* <ul> */}
-      {Huslee.map((angilal, index) => {
+      {Jagsaalt.map((angilal, index) => {
         return (
-          // <li style={{ textDecoration: "none" }}>
-          <ListItem
+          <Card
             key={angilal.id}
-            category={angilal}
-            Editbtn={() => editInput(index)}
-            DeleteBtn={() => DeleteBtn(index)}
-          />
-          // </li>
+            className="d-flex justify-content-between align-items-center flex-row"
+            style={{ width: "600px" }}
+          >
+            {editingText[angilal.id] !== undefined ? (
+              <>
+                <Card.Body>
+                  {" "}
+                  <input
+                    style={{
+                      border: "2px solid red",
+                      width: "80%",
+                      padding: "7px 2px",
+                    }}
+                    value={editingText[angilal.id]}
+                    onChange={(e) => handleEditingText(angilal.id, e)}
+                  />{" "}
+                </Card.Body>
+                <div>
+                  <Button
+                    className="m-3"
+                    variant="dark"
+                    onClick={() => Cancelbtn(angilal.id)}
+                  >
+                    Болих
+                  </Button>
+                  <Button
+                    className="m-3"
+                    variant="warning"
+                    onClick={() => SaveEditedText(index, angilal.id)}
+                  >
+                    Хадгалах
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Card.Body>{angilal.text} </Card.Body>
+                <div>
+                  <Button
+                    className="m-3"
+                    variant="dark"
+                    onClick={() => editInput(angilal.id, index)}
+                  >
+                    Засах
+                  </Button>
+                  <Button
+                    className="m-3"
+                    variant="warning"
+                    onClick={() => DeleteBtn(index)}
+                  >
+                    Устгах
+                  </Button>
+                </div>
+              </>
+            )}
+          </Card>
         );
       })}
-      {/* </ul> */}
     </>
   );
 }
 
-function ListItem({ category, Editbtn, DeleteBtn }) {
-  return (
-    <Card
-      key={category.id}
-      className="d-flex justify-content-between align-items-center flex-row"
-      style={{ width: "600px" }}
-    >
-      <Card.Body>{category.text} </Card.Body>
-      <div>
-        <Button onClick={Editbtn} className="m-3" variant="dark">
-          Засах
-        </Button>
-        <Button className="m-3" variant="warning" onClick={DeleteBtn}>
-          Устгах
-        </Button>
-      </div>
-    </Card>
-  );
-}
+// function ListItem({ category, Editbtn, DeleteBtn }) {
+//   return (
+//     <Card
+//       key={category.id}
+//       className="d-flex justify-content-between align-items-center flex-row"
+//       style={{ width: "600px" }}
+//     >
+//       <Card.Body>{category.text} </Card.Body>
+//       <div>
+//         <Button className="m-3" variant="dark" onClick={Editbtn}>
+//           Засах
+//         </Button>
+//         <Button className="m-3" variant="warning" onClick={DeleteBtn}>
+//           Устгах
+//         </Button>
+//       </div>
+//     </Card>
+//   );
+// }

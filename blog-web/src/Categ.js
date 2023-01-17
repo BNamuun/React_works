@@ -31,6 +31,7 @@ export function Categor() {
       setList(listCards);
       console.log(listCards);
       SetText("");
+      handleClose();
     }
   }
   return (
@@ -44,7 +45,11 @@ export function Categor() {
           Шинэ
         </button>
       </div>
-      <CategoriesList Huslee={initialList} setlist={setList} />
+      <CategoriesList
+        Jagsaalt={initialList}
+        setlist={setList}
+        SetText={SetText}
+      />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
