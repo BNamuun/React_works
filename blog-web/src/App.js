@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { AdminPart } from "./admin/adminPart";
+import { ClientBlog } from "./client/client";
+import { Tetris } from "./js/Tetris";
 
 // const router = createBrowserRouter([
 //   {
@@ -23,8 +25,32 @@ function App() {
   // return <RouterProvider router={router} />;
   return (
     <BrowserRouter>
+      {/* <NavbarTop /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminPart />} />
+        <Route path="*" element={<ClientBlog />} />
+        <Route path="/tetris/*" element={<Tetris />}>
+          <Route
+            path="first"
+            element={
+              <div>
+                <h1>First Part </h1>
+              </div>
+            }
+          />
+
+          <Route
+            path="second"
+            element={
+              <div>
+                {" "}
+                <h1> Second Part</h1>
+              </div>
+            }
+          />
+          <Route />
+        </Route>
+        {/* <Route path="order" element={<Order />} /> */}
       </Routes>
     </BrowserRouter>
   );

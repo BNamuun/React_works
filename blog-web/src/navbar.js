@@ -4,16 +4,33 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
-function CollapsibleExample() {
+import { NavLink } from "react-router-dom";
+function NavbarTop() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Админ</Navbar.Brand>
+        <Navbar.Brand to="/">Админ</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link to="/admin/">Хэрэглэгч</Nav.Link>
-            <Nav.Link to="/admin/">Ангилал</Nav.Link>
+            <NavLink
+              style={({ isActive }) => ({
+                background: isActive ? "teal" : "none",
+              })}
+              to="/admin/categories"
+            >
+              Ангилал
+            </NavLink>
+
+            <NavLink
+              style={({ isActive }) => ({
+                background: isActive ? "blue" : "none",
+              })}
+              to="/admin/todos"
+            >
+              {" "}
+              Todo
+            </NavLink>
             <NavDropdown title="Мэдээ" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Мэдээ</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -33,4 +50,4 @@ function CollapsibleExample() {
   );
 }
 
-export default CollapsibleExample;
+export default NavbarTop;
