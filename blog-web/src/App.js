@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AdminPart } from "./admin/adminPart";
 import { ClientBlog } from "./client/client";
 import { Tetris } from "./js/Tetris";
+import { AddNews } from "./admin/addNews";
 
 // const router = createBrowserRouter([
 //   {
@@ -28,6 +29,7 @@ function App() {
       {/* <NavbarTop /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminPart />} />
+        <Route path="/admin/addNews/*" element={<AddNews />}></Route>
         <Route path="*" element={<ClientBlog />} />
         <Route path="/tetris/*" element={<Tetris />}>
           <Route

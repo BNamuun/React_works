@@ -13,24 +13,36 @@ function NavbarTop() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <NavLink
+            <Nav.Link
               style={({ isActive }) => ({
                 background: isActive ? "teal" : "none",
               })}
               to="/admin/categories"
+              as={NavLink}
             >
               Ангилал
-            </NavLink>
+            </Nav.Link>
 
-            <NavLink
+            <Nav.Link
               style={({ isActive }) => ({
-                background: isActive ? "blue" : "none",
+                background: isActive ? "teal" : "none",
               })}
               to="/admin/todos"
+              as={NavLink}
             >
               {" "}
               Todo
-            </NavLink>
+            </Nav.Link>
+            <Nav.Link
+              style={({ isActive }) => ({
+                background: isActive ? "teal" : "none",
+              })}
+              to="/"
+              as={NavLink}
+            >
+              {" "}
+              Client Part
+            </Nav.Link>
             <NavDropdown title="Мэдээ" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Мэдээ</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

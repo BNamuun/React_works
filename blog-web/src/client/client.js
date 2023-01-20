@@ -7,15 +7,9 @@ import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
-import React, { Component } from "react";
-import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
-
-import Context from "@ckeditor/ckeditor5-core/src/context";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
-import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
-import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useState } from "react";
 export function ClientBlog() {
   return (
     <>
@@ -129,41 +123,25 @@ function SignIn() {
 //     </>
 //   );
 // }
-class EditPart extends Component {
-  render() {
-    return (
-      <div className="EditPart">
-        <CKEditorContext context={Context}>
-          <h2>Using the CKeditor 5 context feature in React</h2>
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              plugins: [Paragraph, Bold, Italic, Essentials],
-              toolbar: ["bold", "italic"],
-            }}
-            data="<p>Hello from the first editor working with the context!</p>"
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor1 is ready to use!", editor);
-            }}
-          />
 
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              plugins: [Paragraph, Bold, Italic, Essentials],
-              toolbar: ["bold", "italic"],
-            }}
-            data="<p>Hello from the first editor working with the context!</p>"
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor1 is ready to use!", editor);
-            }}
-          />
-        </CKEditorContext>
-      </div>
-    );
-  }
+export function EditPart() {
+  const [text, setText] = useState();
+
+  return (
+    <>
+      <CKEditor
+        editor={ClassicEditor}
+        data={text}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          setText(data);
+          // console.log({ event, editor, data });
+        }}
+      />
+
+      {/* <div>{text}</div> */}
+
+      {/* <div dangerouslySetInnerHTML={{ __html: text }}></div> */}
+    </>
+  );
 }
-
-export default EditPart;

@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function CategoriesList({ Jagsaalt, setlist }) {
   const [editingText, savingIndex] = useState({});
@@ -33,6 +34,7 @@ export function CategoriesList({ Jagsaalt, setlist }) {
     setlist(ListCards);
     Cancelbtn(id);
   }
+  const navigate = useNavigate();
   return (
     <>
       {Jagsaalt.map((angilal, index) => {
@@ -40,7 +42,7 @@ export function CategoriesList({ Jagsaalt, setlist }) {
           <Card
             key={angilal.id}
             className="d-flex justify-content-between align-items-center flex-row"
-            style={{ width: "600px" }}
+            style={{ width: "800px" }}
           >
             {editingText[angilal.id] !== undefined ? (
               <>
@@ -90,6 +92,14 @@ export function CategoriesList({ Jagsaalt, setlist }) {
                     onClick={() => DeleteBtn(index)}
                   >
                     Устгах
+                  </Button>
+                  <Button
+                    className="m-3"
+                    variant="primary"
+                    onClick={() => navigate("/admin/addNews/")}
+                    type="primary"
+                  >
+                    Мэдээлэл нэмэх
                   </Button>
                 </div>
               </>

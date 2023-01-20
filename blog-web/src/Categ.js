@@ -10,6 +10,7 @@ export function Categor() {
   const handleShow = () => setShow(true);
   const [text, SetText] = useState("");
   // const [list, addList] = useState({});
+  const [sText, setSText] = useState("");
   const [initialList, setList] = useState([]);
 
   // const InpVal = "";
@@ -17,6 +18,10 @@ export function Categor() {
   function getValue(e) {
     const InpVal = e.target.value;
     SetText(InpVal);
+  }
+  function SecondValue(e) {
+    const InpVal = e.target.value;
+    setSText(InpVal);
   }
   function Saving() {
     if (text === "") {
@@ -33,6 +38,19 @@ export function Categor() {
       SetText("");
       handleClose();
     }
+  }
+  function UploadImages() {
+    const [image, setImage] = useState("");
+    function handleImage(e) {
+      // console.log(e.target.files);
+      setImage(e.target.files[0]);
+    }
+    return (
+      <div>
+        <input type="file" name="file" onChange={handleImage} />
+        {/* <button onClick={handleApi}>Submit</button> */}
+      </div>
+    );
   }
   return (
     <>
@@ -56,9 +74,23 @@ export function Categor() {
           <Modal.Title>Ангилал нэмэх</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          <p>Нэр</p>
-          <input onChange={getValue} value={text} style={{ width: "100%" }} />
+        <Modal.Body className="d-flex flex-column gap-3">
+          <div>
+            <p>Ангилалын нэр:</p>
+            <input onChange={getValue} value={text} style={{ width: "100%" }} />
+          </div>
+          {/* <div> */}
+          {/* <p>Мэдээ:</p>
+            <input
+              onChange={SecondValue}
+              value={sText}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div className="d-flex flex-column">
+            <p>Зураг: </p>
+            <input type="file" name="file" onChange={UploadImages} />
+          </div> */}
         </Modal.Body>
 
         <Modal.Footer>
