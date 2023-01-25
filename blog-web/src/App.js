@@ -7,6 +7,7 @@ import { AdminPart } from "./admin/adminPart";
 import { ClientBlog } from "./client/client";
 import { Tetris } from "./js/Tetris";
 import { AddNews } from "./admin/addNews";
+import { Categor } from "./Categ";
 
 // const router = createBrowserRouter([
 //   {
@@ -26,6 +27,7 @@ function App() {
   // return <RouterProvider router={router} />;
   return (
     <BrowserRouter>
+      {/* <Categor /> */}
       {/* <NavbarTop /> */}
       <Routes>
         <Route path="/admin/*" element={<AdminPart />} />

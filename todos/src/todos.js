@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { TodosList } from "./TodosList";
 import { TodoNew } from "./TodosNew";
+import axios from "axios";
 // const initialTodos = [" washing", " cleaning", " vacuuming"];
 // const a = ["kjahdkf"]; // huuchin butets ni jiriin massiv dotor string bsan
 // const a1 = [{ text: "d;lkfak", id: 123, done: true }]; // shine butets ni
@@ -19,6 +20,20 @@ function Todos() {
     const newTodos = [newTodo, ...initialTodos];
     setTodos(newTodos);
   }
+  useEffect(() => {
+    axios.get("http://localhost:8000/users").then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        // console.log(data.map(item));
+        data.map((dat) =>
+          // cosnt DateVal =  DateTime.push((item)[0])
+          console.log(dat.item)
+        );
+      } else {
+        alert(`Error: ${status}`);
+      }
+    });
+  });
 
   function handleDelete(bairlal) {
     if (window.confirm("устгах уу?")) {

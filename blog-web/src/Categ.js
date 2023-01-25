@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { v4 as uuidv4 } from "uuid";
-import { CategoriesList } from "./CategoriesList";
-
+// import { CategoriesList } from "./CategoriesList";
+import axios from "axios";
 export function Categor() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -19,6 +19,22 @@ export function Categor() {
     const InpVal = e.target.value;
     SetText(InpVal);
   }
+  useEffect(() => {
+    axios.get("http://localhost:8000/users").then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        // console.log(data.map(item));
+        data.map((dat) =>
+          // cosnt DateVal =  DateTime.push((item)[0])
+
+          console.log(dat.text)
+        );
+      } else {
+        alert(`Error: ${status}`);
+      }
+    });
+  }, []);
+
   function SecondValue(e) {
     const InpVal = e.target.value;
     setSText(InpVal);
@@ -63,11 +79,11 @@ export function Categor() {
           Шинэ
         </button>
       </div>
-      <CategoriesList
+      {/* <CategoriesList
         Jagsaalt={initialList}
         setlist={setList}
         SetText={SetText}
-      />
+      /> */}
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
