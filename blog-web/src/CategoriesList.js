@@ -77,7 +77,7 @@ export function CategoriesList({ Jagsaalt, setlist }) {
               </>
             ) : (
               <>
-                <Card.Body>{angilal.text} </Card.Body>
+                <Card.Body>{angilal.name} </Card.Body>
                 <div>
                   <Button
                     className="m-3"

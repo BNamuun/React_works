@@ -4,13 +4,15 @@ import Modal from "react-bootstrap/Modal";
 import { v4 as uuidv4 } from "uuid";
 // import { CategoriesList } from "./CategoriesList";
 import axios from "axios";
+import { CategoriesList } from "./CategoriesList";
+
 export function Categor() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [text, SetText] = useState("");
   // const [list, addList] = useState({});
-  const [sText, setSText] = useState("");
+  // const [sText, setSText] = useState("");
   const [initialList, setList] = useState([]);
 
   // const InpVal = "";
@@ -20,33 +22,30 @@ export function Categor() {
     SetText(InpVal);
   }
   useEffect(() => {
-    axios.get("http://localhost:8000/users").then((res) => {
+    axios.get("http://localhost:8000/categories").then((res) => {
       const { data, status } = res;
       if (status === 200) {
         // console.log(data.map(item));
-        data.map((dat) =>
-          // cosnt DateVal =  DateTime.push((item)[0])
-
-          console.log(dat.text)
-        );
+        setList(data);
+        console.log(data, status);
       } else {
         alert(`Error: ${status}`);
       }
     });
   }, []);
 
-  function SecondValue(e) {
-    const InpVal = e.target.value;
-    setSText(InpVal);
-  }
+  // function SecondValue(e) {
+  //   const InpVal = e.target.value;
+  //   setSText(InpVal);
+  // }
   function Saving() {
     if (text === "") {
       SetText("utgaa oruulna uu");
     } else {
       // alert(text);
       const listCard = {
-        text: text,
         id: uuidv4(),
+        text: text,
       };
       const listCards = [listCard, ...initialList];
       setList(listCards);
@@ -55,19 +54,32 @@ export function Categor() {
       handleClose();
     }
   }
-  function UploadImages() {
-    const [image, setImage] = useState("");
-    function handleImage(e) {
-      // console.log(e.target.files);
-      setImage(e.target.files[0]);
-    }
-    return (
-      <div>
-        <input type="file" name="file" onChange={handleImage} />
-        {/* <button onClick={handleApi}>Submit</button> */}
-      </div>
-    );
-  }
+  // useEffect(() => {
+  //   axios.post(
+  //     "http://localhost:8000/categories",
+  //     {
+  //       name: "WTF",
+  //     },
+  //     {
+  //       headers: {
+  //         "Content-type": "application/json; charset=UTF-8",
+  //       },
+  //     }
+  //   );
+  // }, []);
+  // function UploadImages() {
+  //   const [image, setImage] = useState("");
+  //   function handleImage(e) {
+  //     // console.log(e.target.files);
+  //     setImage(e.target.files[0]);
+  //   }
+  //   return (
+  //     <div>
+  //       <input type="file" name="file" onChange={handleImage} />
+  //       {/* <button onClick={handleApi}>Submit</button> */}
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <div
@@ -79,11 +91,11 @@ export function Categor() {
           Шинэ
         </button>
       </div>
-      {/* <CategoriesList
+      <CategoriesList
         Jagsaalt={initialList}
         setlist={setList}
         SetText={SetText}
-      /> */}
+      />
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
