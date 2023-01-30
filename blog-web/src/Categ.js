@@ -21,7 +21,7 @@ export function Categor() {
     const InpVal = e.target.value;
     SetText(InpVal);
   }
-  useEffect(() => {
+  function GetData() {
     axios.get("http://localhost:8000/categories").then((res) => {
       const { data, status } = res;
       if (status === 200) {
@@ -32,40 +32,64 @@ export function Categor() {
         alert(`Error: ${status}`);
       }
     });
+  }
+  useEffect(() => {
+    GetData();
   }, []);
 
   // function SecondValue(e) {
   //   const InpVal = e.target.value;
   //   setSText(InpVal);
   // }
+  // function Saving() {
+  //   if (text === "") {
+  //     SetText("utgaa oruulna uu");
+  //   } else {
+  //     // alert(text);
+  //     // const listCard = {
+  //     //   id: uuidv4(),
+  //     //   name: text,
+  //     // };
+  //     // const listCards = [listCard, ...initialList];
+  //     // setList(listCards);
+  //     // console.log(listCards);
+  //     // SetText("");
+  //     handleClose();
+  //   }
+  // }
   function Saving() {
-    if (text === "") {
-      SetText("utgaa oruulna uu");
-    } else {
-      // alert(text);
-      const listCard = {
-        id: uuidv4(),
-        text: text,
-      };
-      const listCards = [listCard, ...initialList];
-      setList(listCards);
-      console.log(listCards);
-      SetText("");
-      handleClose();
-    }
+    useEffect(() => {
+      if (text === "") {
+        SetText("utgaa oruulna uu");
+      } else {
+        axios
+          .post("http://localhost:8000/categories", {
+            name: text,
+          })
+          .then((res) => {
+            // const { data, status } = res;
+            // if (status === 200) {
+            //   setList(data);
+            //   SetText("");
+            //   handleClose();
+            // } else {
+            //   alert("dfkjalksdjf");
+            // }
+          });
+      }
+    }, []);
   }
   // useEffect(() => {
-  //   axios.post(
-  //     "http://localhost:8000/categories",
-  //     {
-  //       name: "WTF",
-  //     },
-  //     {
-  //       headers: {
-  //         "Content-type": "application/json; charset=UTF-8",
-  //       },
+  //   axios.get("http://localhost:8000/categories").then((res) => {
+  //     const { data, status } = res;
+  //     if (status === 200) {
+  //       // console.log(data.map(item));
+  //       setList(data);
+  //       console.log(data, status);
+  //     } else {
+  //       alert(`Error: ${status}`);
   //     }
-  //   );
+  //   });
   // }, []);
   // function UploadImages() {
   //   const [image, setImage] = useState("");
