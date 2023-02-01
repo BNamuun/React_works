@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 // import { CategoriesList } from "./CategoriesList";
 import axios from "axios";
 import { CategoriesList } from "./CategoriesList";
+import { useSearchParams } from "react-router-dom";
 
 export function Categor() {
   const [show, setShow] = useState(false);
@@ -14,7 +15,8 @@ export function Categor() {
   // const [list, addList] = useState({});
   // const [sText, setSText] = useState("");
   const [initialList, setList] = useState([]);
-
+  const [name, setName] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams({});
   // const InpVal = "";
 
   function getValue(e) {
@@ -57,40 +59,25 @@ export function Categor() {
   //     handleClose();
   //   }
   // }
-  function Saving() {
-    useEffect(() => {
-      if (text === "") {
-        SetText("utgaa oruulna uu");
-      } else {
-        axios
-          .post("http://localhost:8000/categories", {
-            name: text,
-          })
-          .then((res) => {
-            // const { data, status } = res;
-            // if (status === 200) {
-            //   setList(data);
-            //   SetText("");
-            //   handleClose();
-            // } else {
-            //   alert("dfkjalksdjf");
-            // }
-          });
-      }
-    }, []);
+  function OnComplete() {
+    GetData();
   }
-  // useEffect(() => {
-  //   axios.get("http://localhost:8000/categories").then((res) => {
-  //     const { data, status } = res;
-  //     if (status === 200) {
-  //       // console.log(data.map(item));
-  //       setList(data);
-  //       console.log(data, status);
-  //     } else {
-  //       alert(`Error: ${status}`);
-  //     }
-  //   });
-  // }, []);
+  function onClose() {
+    setSearchParams({});
+  }
+  function Saving() {
+    axios
+      .post("http://localhost:8000/categories", {
+        name: name,
+      })
+      .then((res) => {
+        const { status } = res;
+        if (status === 201) {
+          OnComplete();
+          onClose();
+        }
+      });
+  }
   // function UploadImages() {
   //   const [image, setImage] = useState("");
   //   function handleImage(e) {
