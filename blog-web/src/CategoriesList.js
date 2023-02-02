@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
@@ -56,9 +56,34 @@ export function CategoriesList({
     setlist(ListCards);
     Cancelbtn(id);
   }
+
+  useEffect(() => {
+    if (editingID) {
+      axios.get(`http://localhost:8000/categories/${editingID}`).then((res) => {
+        const { data, status } = res;
+        if (status === 200) {
+          setName(data.name);
+        } else {
+          alert(`aldaa garlaa: ${status}`);
+        }
+      });
+    }
+  }, [editingID]);
+
   function handleSave() {
-    if ((editingID = "new")) {
-      Savingfunc();
+    if (editingID === "new") {
+      axios
+        .post("http://localhost:8000/categories", {
+          name: name,
+        })
+        .then((res) => {
+          const { status } = res;
+          if (status === 201) {
+            onComplete();
+            onClose();
+            setName("");
+          }
+        });
     } else {
       axios
         .put(`http://localhost:8000/categories/${editingID}`, {
@@ -123,9 +148,9 @@ export function CategoriesList({
                     className="m-3"
                     variant="dark"
                     // onClick={() => editInput(angilal.id, index)}
-                    // onClick={() => setSearchParams({ editingID: angilal.id })}
+                    onClick={() => setSearchParams({ editingID: angilal.id })}
 
-                    onClick={handleSave}
+                    // onClick={() => handleSave(angilal.id)}
                   >
                     Засах
                   </Button>
