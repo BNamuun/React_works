@@ -2,10 +2,21 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function CategoriesList({ Jagsaalt, setlist }) {
   const [editingText, savingIndex] = useState({});
 
+  function handleDelete(){
+    if(window.confirm("Delete")){
+      console.log(Jagsaalt.id);
+    //   axios.delete(`http://localhost:8000/categories/${Jagsaalt.id}`).then((res) =>
+    //  {
+    //   const {data, status} = res;
+    //   console.log({data, status})
+    //  } )
+    }
+  }
   function editInput(id, index) {
     const listCards = [...Jagsaalt];
     listCards[id] = Jagsaalt[index].text;
@@ -89,7 +100,8 @@ export function CategoriesList({ Jagsaalt, setlist }) {
                   <Button
                     className="m-3"
                     variant="warning"
-                    onClick={() => DeleteBtn(index)}
+                    // onClick={() => DeleteBtn(index)}
+                    onClick={handleDelete}
                   >
                     Устгах
                   </Button>

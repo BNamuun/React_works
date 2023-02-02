@@ -21,7 +21,7 @@ export function Categor() {
 
   function getValue(e) {
     const InpVal = e.target.value;
-    SetText(InpVal);
+    setName(InpVal);
   }
   function GetData() {
     axios.get("http://localhost:8000/categories").then((res) => {
@@ -64,6 +64,7 @@ export function Categor() {
   }
   function onClose() {
     setSearchParams({});
+    console.log(searchParams);
   }
   function Saving() {
     axios
@@ -71,10 +72,12 @@ export function Categor() {
         name: name,
       })
       .then((res) => {
-        const { status } = res;
+        const {status } = res;
         if (status === 201) {
           OnComplete();
           onClose();
+          setName('')
+          handleClose();
         }
       });
   }
@@ -107,7 +110,6 @@ export function Categor() {
         setlist={setList}
         SetText={SetText}
       />
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ангилал нэмэх</Modal.Title>
@@ -116,7 +118,7 @@ export function Categor() {
         <Modal.Body className="d-flex flex-column gap-3">
           <div>
             <p>Ангилалын нэр:</p>
-            <input onChange={getValue} value={text} style={{ width: "100%" }} />
+            <input onChange={getValue} value={name} style={{ width: "100%" }} />
           </div>
           {/* <div> */}
           {/* <p>Мэдээ:</p>
