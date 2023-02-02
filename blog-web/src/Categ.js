@@ -64,19 +64,20 @@ export function Categor() {
   }
   function onClose() {
     setSearchParams({});
-    console.log(searchParams);
   }
+  // const editing = searchParams.get("editing") === "new";
+  const editing = searchParams.get("editing");
   function Saving() {
     axios
       .post("http://localhost:8000/categories", {
         name: name,
       })
       .then((res) => {
-        const {status } = res;
+        const { status } = res;
         if (status === 201) {
           OnComplete();
           onClose();
-          setName('')
+          setName("");
           handleClose();
         }
       });
@@ -94,6 +95,7 @@ export function Categor() {
   //     </div>
   //   );
   // }
+
   return (
     <>
       <div
@@ -101,7 +103,13 @@ export function Categor() {
         style={{ width: "600px" }}
       >
         <h1>Ангилал</h1>
-        <button className="btn btn-success" onClick={handleShow}>
+        {/* <button className="btn btn-success" onClick={handleShow} >
+          Шинэ
+        </button> */}
+        <button
+          className="btn btn-success"
+          onClick={() => setSearchParams({ editing: "new" })}
+        >
           Шинэ
         </button>
       </div>
@@ -109,8 +117,13 @@ export function Categor() {
         Jagsaalt={initialList}
         setlist={setList}
         SetText={SetText}
+        Getdata={GetData}
+        editingID={editing}
+        Savingfunc={Saving}
+        OnComplete={OnComplete}
+        onClose={onClose}
       />
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={editing} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ангилал нэмэх</Modal.Title>
         </Modal.Header>

@@ -1,20 +1,31 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 
-export function CategoriesList({ Jagsaalt, setlist }) {
+export function CategoriesList({
+  Jagsaalt,
+  setlist,
+  Getdata,
+  editingID,
+  Savingfunc,
+  onComplete,
+  onClose,
+}) {
   const [editingText, savingIndex] = useState({});
-
-  function handleDelete(){
-    if(window.confirm("Delete")){
-      console.log(Jagsaalt.id);
-    //   axios.delete(`http://localhost:8000/categories/${Jagsaalt.id}`).then((res) =>
-    //  {
-    //   const {data, status} = res;
-    //   console.log({data, status})
-    //  } )
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const [name, setName] = useState("");
+  function handleDelete(id) {
+    if (window.confirm("Delete")) {
+      // console.log(Jagsaalt.id);
+      axios.delete(`http://localhost:8000/categories/${id}`).then((res) => {
+        const { data, status } = res;
+        if (status === 200) {
+          Getdata();
+          console.log({ data, status });
+        }
+      });
     }
   }
   function editInput(id, index) {
@@ -44,6 +55,24 @@ export function CategoriesList({ Jagsaalt, setlist }) {
     ListCards[index].text = editingText[id];
     setlist(ListCards);
     Cancelbtn(id);
+  }
+  function handleSave() {
+    if ((editingID = "new")) {
+      Savingfunc();
+    } else {
+      axios
+        .put(`http://localhost:8000/categories/${editingID}`, {
+          name: name,
+        })
+        .then((res) => {
+          const { status } = res;
+          if (status === 200) {
+            onComplete();
+            onClose();
+            setName("");
+          }
+        });
+    }
   }
   const navigate = useNavigate();
   return (
@@ -93,7 +122,10 @@ export function CategoriesList({ Jagsaalt, setlist }) {
                   <Button
                     className="m-3"
                     variant="dark"
-                    onClick={() => editInput(angilal.id, index)}
+                    // onClick={() => editInput(angilal.id, index)}
+                    // onClick={() => setSearchParams({ editingID: angilal.id })}
+
+                    onClick={handleSave}
                   >
                     Засах
                   </Button>
@@ -101,7 +133,7 @@ export function CategoriesList({ Jagsaalt, setlist }) {
                     className="m-3"
                     variant="warning"
                     // onClick={() => DeleteBtn(index)}
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(angilal.id)}
                   >
                     Устгах
                   </Button>

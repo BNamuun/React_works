@@ -89,7 +89,7 @@ app.delete("/categories/:id", (req, res) => {
   const { id } = req.params;
   const one = categories.find((category) => category.id === id);
   if (one) {
-    const newList = categories.filter((category) => category.id === id);
+    const newList = categories.filter((category) => category.id !== id);
     categories = newList;
     res.json({ deletedId: id });
   } else {
