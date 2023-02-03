@@ -57,19 +57,6 @@ export function CategoriesList({
     Cancelbtn(id);
   }
 
-  useEffect(() => {
-    if (editingID) {
-      axios.get(`http://localhost:8000/categories/${editingID}`).then((res) => {
-        const { data, status } = res;
-        if (status === 200) {
-          setName(data.name);
-        } else {
-          alert(`aldaa garlaa: ${status}`);
-        }
-      });
-    }
-  }, [editingID]);
-
   function handleSave() {
     if (editingID === "new") {
       axios
@@ -148,7 +135,7 @@ export function CategoriesList({
                     className="m-3"
                     variant="dark"
                     // onClick={() => editInput(angilal.id, index)}
-                    onClick={() => setSearchParams({ editingID: angilal.id })}
+                    onClick={() => setSearchParams({ editing: angilal.id })}
 
                     // onClick={() => handleSave(angilal.id)}
                   >

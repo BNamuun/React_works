@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { CategoriesList } from "./CategoriesList";
 import { useSearchParams } from "react-router-dom";
-
+import { useDebounce } from "use-debounce";
 export function Categor() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -17,6 +17,10 @@ export function Categor() {
   const [initialList, setList] = useState([]);
   const [name, setName] = useState("");
   const [searchParams, setSearchParams] = useSearchParams({});
+  const [query, setQuery] = useState("");
+  const [list, setListQ] = useState([]);
+  const [searchedQuery] = useDebounce(query, 1000);
+  const editing = searchParams.get("editing");
   // const InpVal = "";
 
   function getValue(e) {
@@ -38,6 +42,65 @@ export function Categor() {
   useEffect(() => {
     GetData();
   }, []);
+
+  function loadCategory(query = "") {
+    axios.get(`http://localhost:8000/categories?query=${query}`).then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        setListQ(data);
+      } else {
+        alert(`Aldaa garllaa: ${status}`);
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (editing) {
+      setShow(true);
+      if (editing !== "new") {
+        axios.get(`http://localhost:8000/categories/${editing}`).then((res) => {
+          const { data, status } = res;
+          if (status === 200) {
+            setName(data.name);
+          } else {
+            alert(`aldaa garlaa: ${status}`);
+          }
+        });
+      }
+    }
+  }, [editing]);
+
+  function handleSave() {
+    if (editing === "new") {
+      axios
+        .post("http://localhost:8000/categories", {
+          name: name,
+        })
+        .then((res) => {
+          const { status } = res;
+          if (status === 201) {
+            OnComplete();
+            onClose();
+            setName("");
+          }
+        });
+    } else {
+      axios
+        .put(`http://localhost:8000/categories/${editing}`, {
+          name: name,
+        })
+        .then((res) => {
+          const { status } = res;
+          if (status === 200) {
+            OnComplete();
+            onClose();
+            setName("");
+          }
+        });
+    }
+
+    setShow(false);
+  }
 
   // function SecondValue(e) {
   //   const InpVal = e.target.value;
@@ -66,7 +129,7 @@ export function Categor() {
     setSearchParams({});
   }
   // const editing = searchParams.get("editing") === "new";
-  const editing = searchParams.get("editing");
+
   function Saving() {
     axios
       .post("http://localhost:8000/categories", {
@@ -113,6 +176,13 @@ export function Categor() {
           Шинэ
         </button>
       </div>
+      <input
+        placeholder="Search"
+        className="form-control"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />{" "}
+      <button>Хайх </button>
       <CategoriesList
         Jagsaalt={initialList}
         setlist={setList}
@@ -122,8 +192,10 @@ export function Categor() {
         Savingfunc={Saving}
         OnComplete={OnComplete}
         onClose={onClose}
+        list={list}
+        onChange={loadCategory}
       />
-      <Modal show={editing} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Ангилал нэмэх</Modal.Title>
         </Modal.Header>
@@ -148,7 +220,7 @@ export function Categor() {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={Saving}>
+          <Button variant="primary" onClick={handleSave}>
             Хадгалах
           </Button>
           <Button variant="secondary" onClick={handleClose}>
