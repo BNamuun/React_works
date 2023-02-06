@@ -1,10 +1,7 @@
 const { v4: uuid } = require("uuid");
 const express = require("express");
 const fs = require("fs");
-<<<<<<< HEAD
 
-=======
->>>>>>> b1259c3dced243ba94949ce13851e015cae4b50b
 // Requiring module like importing cors and express
 const cors = require("cors");
 const { response } = require("express");

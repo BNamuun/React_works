@@ -13,10 +13,7 @@ export function CategoriesList({
   onComplete,
   onClose,
   list,
-<<<<<<< HEAD
   onChange,
-=======
->>>>>>> b1259c3dced243ba94949ce13851e015cae4b50b
   searchedQuery,
 }) {
   const [editingText, savingIndex] = useState({});
