@@ -44,16 +44,19 @@ export function Categor() {
   }, []);
 
   function loadCategory(query = "") {
-    axios.get(`http://localhost:8000/categories?query=${query}`).then((res) => {
+    axios.get(`http://localhost:8000/categories?q=${query}`).then((res) => {
       const { data, status } = res;
       if (status === 200) {
         setListQ(data);
+        console.log(data);
       } else {
         alert(`Aldaa garllaa: ${status}`);
       }
     });
   }
-
+  useEffect(() => {
+    loadCategory(searchedQuery);
+  }, [searchedQuery]);
   useEffect(() => {
     if (editing) {
       setShow(true);
@@ -123,7 +126,7 @@ export function Categor() {
   //   }
   // }
   function OnComplete() {
-    GetData();
+    loadCategory();
   }
   function onClose() {
     setSearchParams({});
@@ -182,7 +185,7 @@ export function Categor() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />{" "}
-      <button>Хайх </button>
+      <button onClick={() => loadCategory(searchedQuery)}>Хайх </button>
       <CategoriesList
         Jagsaalt={initialList}
         setlist={setList}
@@ -193,6 +196,7 @@ export function Categor() {
         OnComplete={OnComplete}
         onClose={onClose}
         list={list}
+        searchedQuery={searchedQuery}
         onChange={loadCategory}
       />
       <Modal show={show} onHide={handleClose}>

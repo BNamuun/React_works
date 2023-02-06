@@ -12,21 +12,28 @@ export function CategoriesList({
   Savingfunc,
   onComplete,
   onClose,
+  list,
+  onChange,
+  searchedQuery,
 }) {
   const [editingText, savingIndex] = useState({});
   const [searchParams, setSearchParams] = useSearchParams({});
   const [name, setName] = useState("");
+  const navigate = useNavigate();
   function handleDelete(id) {
     if (window.confirm("Delete")) {
       // console.log(Jagsaalt.id);
       axios.delete(`http://localhost:8000/categories/${id}`).then((res) => {
         const { data, status } = res;
         if (status === 200) {
-          Getdata();
+          onChange();
           console.log({ data, status });
         }
       });
     }
+  }
+  if (list.length === 0) {
+    return <h1> Ийм үр дүн олдсонгүй</h1>;
   }
   function editInput(id, index) {
     const listCards = [...Jagsaalt];
@@ -86,10 +93,10 @@ export function CategoriesList({
         });
     }
   }
-  const navigate = useNavigate();
+
   return (
     <>
-      {Jagsaalt.map((angilal, index) => {
+      {list.map((angilal, index) => {
         return (
           <Card
             key={angilal.id}
