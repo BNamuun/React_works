@@ -58,6 +58,9 @@ export function Categor() {
     loadCategory(searchedQuery);
   }, [searchedQuery]);
   useEffect(() => {
+    loadCategory(searchedQuery);
+  }, [searchedQuery]);
+  useEffect(() => {
     if (editing) {
       setShow(true);
       if (editing !== "new") {

@@ -14,6 +14,7 @@
     "axios": "^1.2.4",
     "bootstrap": "^5.2.3",
     "framer-motion": "^8.5.0",
+    "html-react-parser": "^3.0.8",
     "react": "^18.2.0",
     "react-animate-images": "^0.1.4",
     "react-awesome-button": "^7.0.5",
