@@ -55,6 +55,9 @@ export function Categor() {
   }
 
   useEffect(() => {
+    loadCategory(searchedQuery);
+  }, [searchedQuery]);
+  useEffect(() => {
     if (editing) {
       setShow(true);
       if (editing !== "new") {
@@ -193,6 +196,7 @@ export function Categor() {
         OnComplete={OnComplete}
         onClose={onClose}
         list={list}
+        searchedQuery={searchedQuery}
         onChange={loadCategory}
       />
       <Modal show={show} onHide={handleClose}>

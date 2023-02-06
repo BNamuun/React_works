@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 function NavbarTop() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -48,7 +48,9 @@ function NavbarTop() {
               <NavDropdown.Item href="#action/3.2">
                 Another action
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item to="/admin/categories/addNews" as={Link}>
+                Мэдээ нэмэх{" "}
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link

@@ -8,6 +8,7 @@ import { ClientBlog } from "./client/client";
 import { Tetris } from "./js/Tetris";
 import { AddNews } from "./admin/addNews";
 import { Categor } from "./Categ";
+import { ArticleNew } from "./admin/ArticlesNew";
 
 // const router = createBrowserRouter([
 //   {
@@ -32,6 +33,10 @@ function App() {
       <Routes>
         <Route path="/admin/*" element={<AdminPart />} />
         <Route path="/admin/addNews/*" element={<AddNews />}></Route>
+        <Route
+          path="/admin/categories/addNews"
+          element={<ArticleNew />}
+        ></Route>
         <Route path="*" element={<ClientBlog />} />
         <Route path="/tetris/*" element={<Tetris />}>
           <Route

@@ -12,13 +12,15 @@ export function CategoriesList({
   Savingfunc,
   onComplete,
   onClose,
+  list,
+  searchedQuery,
 }) {
   const [editingText, savingIndex] = useState({});
   const [searchParams, setSearchParams] = useSearchParams({});
   const [name, setName] = useState("");
   function handleDelete(id) {
     if (window.confirm("Delete")) {
-      // console.log(Jagsaalt.id);
+      // console.log(list.id);
       axios.delete(`http://localhost:8000/categories/${id}`).then((res) => {
         const { data, status } = res;
         if (status === 200) {
@@ -29,8 +31,8 @@ export function CategoriesList({
     }
   }
   function editInput(id, index) {
-    const listCards = [...Jagsaalt];
-    listCards[id] = Jagsaalt[index].text;
+    const listCards = [...list];
+    listCards[id] = list[index].text;
     savingIndex(listCards);
   }
   function handleEditingText(id, e) {
@@ -40,7 +42,7 @@ export function CategoriesList({
   }
   function DeleteBtn(index) {
     if (window.confirm("Delete this item!")) {
-      const ListCards = [...Jagsaalt];
+      const ListCards = [...list];
       ListCards.splice(index, 1);
       setlist(ListCards);
     }
@@ -51,7 +53,7 @@ export function CategoriesList({
     savingIndex(listCard);
   }
   function SaveEditedText(index, id) {
-    const ListCards = [...Jagsaalt];
+    const ListCards = [...list];
     ListCards[index].text = editingText[id];
     setlist(ListCards);
     Cancelbtn(id);

@@ -3,13 +3,15 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import parse from "html-react-parser";
 export function ClientBlog() {
   return (
     <>
@@ -22,7 +24,7 @@ export function ClientBlog() {
       </Routes>
       <Routes>
         <Route path="/" element={<div>Welcome to Client Part</div>} />
-        <Route path="/blog" element={<BlogHotloh />} />
+        <Route path="/blog/:id" element={<BlogHotloh />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/edit" element={<EditPart />} />
       </Routes>
@@ -48,7 +50,7 @@ function ClientOrder() {
               Edit
             </Nav.Link>
             <Nav.Link to="#" as={Link}>
-              Найзуудын блог
+              Published blog
             </Nav.Link>
             <Nav.Link to="#">Нийтлэлүүд</Nav.Link>
             <NavDropdown title="Мэдээ" id="collasible-nav-dropdown">
@@ -71,6 +73,20 @@ function ClientOrder() {
 }
 function BlogHotloh() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [article, setArticle] = useState();
+  useEffect(() => {
+    axios.get(`http://localhost:8000/articles/${id}`).then((res) => {
+      const { data, status } = res;
+      if (status === 200) {
+        setArticle(data);
+      } else {
+        alert(`Aldaa garlaa: ${status}`);
+      }
+    });
+  }, []);
+
+  if (!article) return <div>Loading...</div>;
   return (
     <>
       <div>
@@ -88,6 +104,10 @@ function BlogHotloh() {
           replace Btn
         </AwesomeButton>
         {/* <button onClick={() => navigate("/SignIn")}> Registarion Form</button> */}
+      </div>
+      <div className="container">
+        <h1>{article.title} </h1>
+        <div>{parse(article.text)}</div>
       </div>
     </>
   );

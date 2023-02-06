@@ -1,6 +1,6 @@
 const { v4: uuid } = require("uuid");
 const express = require("express");
-
+const fs = require("fs");
 // Requiring module like importing cors and express
 const cors = require("cors");
 const { response } = require("express");
@@ -96,6 +96,11 @@ app.delete("/categories/:id", (req, res) => {
     res.sendStatus(404);
   }
 });
+function readArticles() {
+  const content = fs.readFileSync("articles.json");
+  const articles = JSON.parse(content);
+  return articles;
+}
 
 app.put("/categories/:id", (req, res) => {
   const { id } = req.params;
@@ -109,6 +114,25 @@ app.put("/categories/:id", (req, res) => {
   }
 });
 
+app.post("/articles", (req, res) => {
+  const { title, categoryId, text } = req.body;
+  const newArticle = { id: uuid(), title, categoryId, text };
+
+  const articles = readArticles();
+  articles.unshift(newArticle);
+  fs.writeFileSync("articles.json", JSON.stringify(articles));
+  res.sendStatus(201);
+});
+app.get("/articles/:id", (req, res) => {
+  const { id } = req.params;
+  const articles = readArticles();
+  const one = articles.find((item) => item.id === id);
+  if (one) {
+    res.json(one);
+  } else {
+    res.sendStatus(404);
+  }
+});
 // Server setup
 app.listen(port, () => {
   console.log("App is listening at port", port);
