@@ -138,19 +138,24 @@ app.put("/categories/:id", (req, res) => {
 app.post("/articles", (req, res) => {
   const { title, categoryId, text } = req.body;
   const newArticle = { id: uuid(), title, categoryId, text };
-
   const articles = readArticles();
   articles.unshift(newArticle);
   fs.writeFileSync("articles.json", JSON.stringify(articles));
   res.sendStatus(201);
+});
+app.get("/articles", (req, res) => {
+  const articles = readArticles();
+  res.json(articles);
 });
 app.get("/articles/:id", (req, res) => {
   const { id } = req.params;
   const articles = readArticles();
   const one = articles.find((item) => item.id === id);
   const categories = readCategories();
-  const category = categories.find((category) => category.id ===one.categoryId)
-  one.category = category;
+  const category = categories.find(
+    (category) => category.id === one.categoryId
+  );
+  one.nemelt = category;
   if (one) {
     res.json(one);
   } else {

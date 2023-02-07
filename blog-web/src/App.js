@@ -9,6 +9,7 @@ import { Tetris } from "./js/Tetris";
 import { AddNews } from "./admin/addNews";
 import { Categor } from "./Categ";
 import { ArticleNew } from "./admin/ArticlesNew";
+import { useContext, createContext } from "react";
 
 // const router = createBrowserRouter([
 //   {
@@ -24,6 +25,14 @@ import { ArticleNew } from "./admin/ArticlesNew";
 //     element: <div>Hello world!</div>,
 //   },
 // ]);
+export const Namuun = createContext("DefaultZochin");
+function Greeting() {
+  return (
+    <div>
+      <strong>Saina yy </strong>
+    </div>
+  );
+}
 function App() {
   // return <RouterProvider router={router} />;
   return (
@@ -33,9 +42,16 @@ function App() {
       <Routes>
         <Route path="/admin/*" element={<AdminPart />} />
         <Route path="/admin/addNews/*" element={<AddNews />}></Route>
+
         <Route
           path="/admin/categories/addNews"
-          element={<ArticleNew />}
+          element={
+            <Namuun.Provider
+              value={{ greeting: <Greeting />, name: "Gerelee" }}
+            >
+              <ArticleNew />
+            </Namuun.Provider>
+          }
         ></Route>
         <Route path="*" element={<ClientBlog />} />
         <Route path="/tetris/*" element={<Tetris />}>

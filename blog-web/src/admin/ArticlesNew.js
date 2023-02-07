@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { CategoriesSelector } from "./categSelector";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import axios from "axios";
+import { Namuun } from "../App";
 export function ArticleNew() {
   const [text, setText] = useState();
   const [categoryId, setCategoryId] = useState("");
   const [title, setTitle] = useState("");
+  const displayName = useContext(Namuun);
 
   function submit() {
     console.log({ text, categoryId });
@@ -23,9 +25,16 @@ export function ArticleNew() {
         }
       });
   }
+  // console.log(onChange);
   return (
     <>
-      <h1 className="mb-4"> Шинэ мэдээ</h1>
+      <div>
+        <h1 className="mb-4"> Шинэ мэдээ</h1>
+        <h2>
+          {displayName.greeting} {displayName.name}
+        </h2>
+      </div>
+
       <CategoriesSelector
         value={categoryId}
         onChange={(val) => setCategoryId(val)}

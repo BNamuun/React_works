@@ -105,8 +105,12 @@ function BlogHotloh() {
         </AwesomeButton>
         {/* <button onClick={() => navigate("/SignIn")}> Registarion Form</button> */}
       </div>
-      <div className="container" style={{maxWidth: 700}}>
-      <span className="badge rounded-pill text-bg-primary">{article.category?.name}</span>
+      <div className="container" style={{ maxWidth: 700 }}>
+        {/* {category && <span>{category.name}</span>} */}
+        <span className="badge rounded-pill text-bg-primary">
+          {article.nemelt?.name}{" "}
+          {/* {category && <span>{category.name}</span>} /энэ бичэглэл span гарч ирэхгүй бас категори утга нь байхгүй байвал алдаа заана/ == үүнтэй адилхан боловч span таг гарч ирнэ, бас хэрвээ category утга нь байхгүй буюу null байвал зүгээр null аараа гарч ирнэ. Ө.х алдаа заахгүй. */}
+        </span>
         <h1>{article.title} </h1>
         <div>{parse(article.text)}</div>
       </div>
