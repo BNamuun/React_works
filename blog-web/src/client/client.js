@@ -105,7 +105,8 @@ function BlogHotloh() {
         </AwesomeButton>
         {/* <button onClick={() => navigate("/SignIn")}> Registarion Form</button> */}
       </div>
-      <div className="container">
+      <div className="container" style={{maxWidth: 700}}>
+      <span className="badge rounded-pill text-bg-primary">{article.category?.name}</span>
         <h1>{article.title} </h1>
         <div>{parse(article.text)}</div>
       </div>
