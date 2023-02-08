@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { v4 as uuidv4 } from "uuid";
@@ -20,9 +20,11 @@ export function Categor() {
   const [query, setQuery] = useState("");
   const [list, setListQ] = useState([]);
   const [searchedQuery] = useDebounce(query, 1000);
+  const [date, setDate] = useState("");
   const editing = searchParams.get("editing");
   // const InpVal = "";
 
+  const a = useRef(0);
   function getValue(e) {
     const InpVal = e.target.value;
     setName(InpVal);
@@ -133,6 +135,7 @@ export function Categor() {
   }
   function onClose() {
     setSearchParams({});
+    handleClose();
   }
   // const editing = searchParams.get("editing") === "new";
 
@@ -164,6 +167,31 @@ export function Categor() {
   //     </div>
   //   );
   // }
+  const inputEl = useRef();
+  const divEl = useRef();
+  const myInterval = useRef();
+  const myTime = useRef(0);
+  useEffect(() => {
+    if (show) {
+      inputEl.current.focus();
+      divEl.current.append("Hello");
+      console.log(divEl.current);
+
+      myInterval.current = setInterval(() => {
+        console.log("Date", new Date());
+        setDate(new Date().toISOString());
+      }, 1000);
+    }
+  }, [show]);
+  useEffect(() => {
+    if (!show) {
+      clearInterval(myInterval.current);
+    }
+  }, [show]);
+
+  useEffect(() => {
+    myTime.current += 1;
+  }, [inputEl]);
 
   return (
     <>
@@ -210,7 +238,16 @@ export function Categor() {
         <Modal.Body className="d-flex flex-column gap-3">
           <div>
             <p>Ангилалын нэр:</p>
-            <input onChange={getValue} value={name} style={{ width: "100%" }} />
+            {date}
+            {/* {myTime.current} */}
+            <div ref={divEl}>
+              <input
+                ref={inputEl}
+                onChange={getValue}
+                value={name}
+                style={{ width: "100%" }}
+              />
+            </div>
           </div>
           {/* <div> */}
           {/* <p>Мэдээ:</p>
@@ -230,7 +267,7 @@ export function Categor() {
           <Button variant="primary" onClick={handleSave}>
             Хадгалах
           </Button>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={onClose}>
             Хаах
           </Button>
         </Modal.Footer>
