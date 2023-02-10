@@ -29,7 +29,7 @@ export const Namuun = createContext("DefaultZochin");
 function Greeting() {
   return (
     <div>
-      <strong>Saina yy </strong>
+      <strong>Hello </strong>
     </div>
   );
 }
