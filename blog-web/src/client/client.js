@@ -43,8 +43,8 @@ function ClientOrder() {
             <Nav.Link to="/SignIn" as={Link}>
               Бүртгүүлэх
             </Nav.Link>
-            <Nav.Link to="/blog" as={Link}>
-              Блог хөтлөх
+            <Nav.Link to="/admin/articles/new" as={Link}>
+              Articles
             </Nav.Link>
             <Nav.Link to="/edit" as={Link}>
               Edit

@@ -10,6 +10,7 @@ import { AddNews } from "./admin/addNews";
 import { Categor } from "./Categ";
 import { ArticleNew } from "./admin/ArticlesNew";
 import { useContext, createContext } from "react";
+import { Articles } from "./admin/Article";
 
 // const router = createBrowserRouter([
 //   {
@@ -42,6 +43,7 @@ function App() {
       <Routes>
         <Route path="/admin/*" element={<AdminPart />} />
         <Route path="/admin/addNews/*" element={<AddNews />}></Route>
+        <Route path="/admin/articles/new" element={<Articles />}></Route>
 
         <Route
           path="/admin/categories/addNews"
